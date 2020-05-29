@@ -1,0 +1,2 @@
+# pomodoro
+Pomodoro cycle automation
