@@ -1,5 +1,0 @@
-# Timer example
-
-```js
-<Timer />
-```
