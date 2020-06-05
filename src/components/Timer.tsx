@@ -65,7 +65,8 @@ export const Timer: React.FC = (props: Props) => {
   }
   function onNullTimer(event: React.MouseEvent) {
     event.preventDefault();
-    setValue(nullTime);
+    setIsWorking(!isWorking);
+    setIsCounting(false);
   }
 
 };
