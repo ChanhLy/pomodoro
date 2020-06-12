@@ -1,12 +1,10 @@
-import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
+import { Button } from 'antd';
+const workTime = 25 * 60;
+const restTime = 5 * 60;
+const nullTime = 0;
 
-const format = 'mm:ss';
-const workTime = dayjs('2000-00-00 00:25:00', 'YYYY-MM-DD HH:mm:ss');
-const restTime = dayjs('2000-00-00 00:05:00', 'YYYY-MM-DD HH:mm:ss');
-const nullTime = dayjs('2000-00-00 00:00:00', 'YYYY-MM-DD HH:mm:ss');
-
-interface Props { }
+interface Props {}
 
 export const Timer: React.FC = (props: Props) => {
   const [value, setValue] = useState(workTime);
@@ -17,7 +15,7 @@ export const Timer: React.FC = (props: Props) => {
     let timer: number | undefined;
     if (isCounting) {
       timer = window.setInterval(() => {
-        setValue(value => value.subtract(1, 'second'));
+        setValue((value) => value - 1);
       }, 1000);
     }
     return () => {
@@ -27,33 +25,47 @@ export const Timer: React.FC = (props: Props) => {
 
   useEffect(() => {
     if (value === nullTime) {
-      setIsWorking(isWorking => !isWorking);
+      setIsWorking((isWorking) => !isWorking);
     }
-  }, [value])
+  }, [value]);
 
   useEffect(() => {
     return isWorking ? setValue(workTime) : setValue(restTime);
-  }, [isWorking])
+  }, [isWorking]);
 
   return (
     <>
       <div>
-        {value.format(format)}
-        <button onClick={onAddMinutes}>+</button>
+        {parseTime(value)}
+        <Button onClick={onAddMinutes} size='large' type='primary'>
+          +
+        </Button>
       </div>
-      <button onClick={onStartCounter} hidden={isCounting}>
+      <Button
+        onClick={onStartCounter}
+        hidden={isCounting}
+        size='large'
+        type='primary'
+      >
         Start
-      </button>
-      <button onClick={onStopCounter} hidden={!isCounting}>
+      </Button>
+      <Button
+        onClick={onStopCounter}
+        hidden={!isCounting}
+        size='large'
+        type='primary'
+      >
         Stop
-      </button>
-      <button onClick={onNullTimer}>End Timer</button>
+      </Button>
+      <Button onClick={onNullTimer} size='large' type='primary'>
+        End Timer
+      </Button>
     </>
   );
 
   function onAddMinutes(event: React.MouseEvent) {
     event.preventDefault();
-    setValue(value.add(5, 'minute'));
+    setValue(value + 5 * 60);
   }
   function onStartCounter(event: React.MouseEvent) {
     event.preventDefault();
@@ -68,5 +80,10 @@ export const Timer: React.FC = (props: Props) => {
     setIsWorking(!isWorking);
     setIsCounting(false);
   }
-
 };
+
+function parseTime(value: number) {
+  const minutes = value / 60;
+  const seconds = value % 60;
+  return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+}
