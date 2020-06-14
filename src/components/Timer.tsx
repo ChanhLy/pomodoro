@@ -53,7 +53,7 @@ export const Timer: React.FC = (props: Props) => {
         onClick={onStopCounter}
         hidden={!isCounting}
         size='large'
-        type='primary'
+        type='default'
       >
         Stop
       </Button>
@@ -85,5 +85,5 @@ export const Timer: React.FC = (props: Props) => {
 function parseTime(value: number) {
   const minutes = value / 60;
   const seconds = value % 60;
-  return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+  return `${Math.floor(minutes)}:${seconds < 10 ? '0' + seconds : seconds}`;
 }
