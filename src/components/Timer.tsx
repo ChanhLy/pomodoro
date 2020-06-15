@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'antd';
+import { Button } from '@material-ui/core';
+
 const workTime = 25 * 60;
 const restTime = 5 * 60;
 const nullTime = 0;
@@ -37,27 +38,17 @@ export const Timer: React.FC = (props: Props) => {
     <>
       <div>
         {parseTime(value)}
-        <Button onClick={onAddMinutes} size='large' type='primary'>
+        <Button onClick={onAddMinutes} size='large'>
           +
         </Button>
       </div>
-      <Button
-        onClick={onStartCounter}
-        hidden={isCounting}
-        size='large'
-        type='primary'
-      >
+      <Button onClick={onStartCounter} hidden={isCounting} size='large'>
         Start
       </Button>
-      <Button
-        onClick={onStopCounter}
-        hidden={!isCounting}
-        size='large'
-        type='default'
-      >
+      <Button onClick={onStopCounter} hidden={!isCounting} size='large'>
         Stop
       </Button>
-      <Button onClick={onNullTimer} size='large' type='primary'>
+      <Button onClick={onNullTimer} size='large'>
         End Timer
       </Button>
     </>
